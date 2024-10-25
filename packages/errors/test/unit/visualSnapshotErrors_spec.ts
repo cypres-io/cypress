@@ -1237,11 +1237,6 @@ describe('visual error templates', () => {
         plural: [['foo', 'bar']],
       }
     },
-    UNSUPPORTED_BROWSER_VERSION: () => {
-      return {
-        default: [`Cypress does not support running chrome version 64. To use chrome with Cypress, install a version of chrome newer than or equal to 64.`],
-      }
-    },
     MULTIPLE_SUPPORT_FILES_FOUND: () => {
       return {
         default: ['spec.{ts,js}', ['support.ts', 'support.js']],
