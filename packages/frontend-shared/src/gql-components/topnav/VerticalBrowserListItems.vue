@@ -6,9 +6,9 @@
       class="border-b border-transparent cursor-pointer flex border-b-gray-50 border-[1px] min-w-[240px] py-[12px] px-[16px] transition-colors duration-300 group focus-within-default"
       :class="{
         'bg-jade-50': browser.isSelected,
-        'hover:bg-indigo-50 focus-within:bg-indigo-50': !browser.isSelected && !browser.disabled && browser.isVersionSupported,
-        'bg-gray-50 cursor-not-allowed': browser.disabled || !browser.isVersionSupported,
-        'cursor-pointer': !browser.disabled && browser.isVersionSupported
+        'hover:bg-indigo-50 focus-within:bg-indigo-50': !browser.isSelected && !browser.disabled,
+        'bg-gray-50 cursor-not-allowed': browser.disabled,
+        'cursor-pointer': !browser.disabled
       }"
       data-cy="top-nav-browser-list-item"
 
@@ -17,7 +17,7 @@
     >
       <img
         class="mr-[16px] min-w-[26px] w-[26px]"
-        :class="{ 'filter grayscale': browser.disabled || !browser.isVersionSupported }"
+        :class="{ 'filter grayscale': browser.disabled }"
         :src="allBrowsersIcons[browser.displayName] || allBrowsersIcons.generic"
         alt=""
       >
@@ -26,9 +26,9 @@
           <button
             class="font-medium box-border focus:outline-none"
             :class="{
-              'text-indigo-500 group-hover:text-indigo-700': !browser.isSelected && !browser.disabled && browser.isVersionSupported,
+              'text-indigo-500 group-hover:text-indigo-700': !browser.isSelected && !browser.disabled,
               'text-jade-700': browser.isSelected,
-              'text-gray-500': browser.disabled || !browser.isVersionSupported
+              'text-gray-500': browser.disabled
             }"
           >
             {{ browser.displayName }}
@@ -56,24 +56,6 @@
               <i-cy-circle-check_x24 class="h-[24px] w-[24px] icon-dark-jade-100 icon-light-jade-500" />
             </div>
           </template>
-          <template v-else-if="!browser.isVersionSupported">
-            <div class="h-[16px] relative">
-              <Tooltip>
-                <i-cy-circle-bg-question-mark_x16
-                  class="icon-dark-gray-700 icon-light-gray-200"
-                  data-cy="unsupported-browser-tooltip-trigger"
-                />
-                <template #popper>
-                  <div class="text-center p-2 text-gray-300 text-[14px] leading-[20px]">
-                    <div class="font-medium text-white mb-2">
-                      Unsupported browser
-                    </div>
-                    {{ browser.warning }}
-                  </div>
-                </template>
-              </Tooltip>
-            </div>
-          </template>
         </div>
       </div>
     </li>
@@ -86,7 +68,6 @@ import type { VerticalBrowserListItemsFragment } from '../../generated/graphql'
 import { computed } from 'vue'
 import { gql, useMutation } from '@urql/vue'
 import { allBrowsersIcons } from '@packages/frontend-shared/src/assets/browserLogos'
-import Tooltip from '../../components/Tooltip.vue'
 
 const { t } = useI18n()
 
@@ -99,7 +80,6 @@ fragment VerticalBrowserListItems on CurrentProject {
     displayName
     version
     majorVersion
-    isVersionSupported
     warning
     disabled
   }
@@ -134,7 +114,7 @@ const browsers = computed(() => {
 const setBrowser = useMutation(VerticalBrowserListItems_SetBrowserDocument)
 
 const handleBrowserChoice = async (browser) => {
-  if (browser.disabled || !browser.isVersionSupported || browser.isSelected) {
+  if (browser.disabled || browser.isSelected) {
     return
   }
 

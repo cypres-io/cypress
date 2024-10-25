@@ -31,7 +31,6 @@ type Browser implements Node {
   id: ID!
   isFocusSupported: Boolean!
   isSelected: Boolean!
-  isVersionSupported: Boolean!
   majorVersion: String
   name: String!
   path: String!
@@ -1259,7 +1258,6 @@ enum ErrorTypeEnum {
   UNEXPECTED_BEFORE_BROWSER_LAUNCH_PROPERTIES
   UNEXPECTED_INTERNAL_ERROR
   UNEXPECTED_MUTATION_ERROR
-  UNSUPPORTED_BROWSER_VERSION
   VIDEO_CAPTURE_FAILED
   VIDEO_COMPRESSION_FAILED
   VIDEO_RECORDING_FAILED

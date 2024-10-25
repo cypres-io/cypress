@@ -14,16 +14,16 @@
         :key="browser.id"
         :data-cy-browser="browser.name"
         :value="browser.id"
-        :disabled="browser.disabled || !browser.isVersionSupported || browserStatus.chosen"
+        :disabled="browser.disabled || browserStatus.chosen"
       >
         <RadioGroupLabel
           :for="browser.id"
           class="rounded border text-center min-h-[144px] pt-6 pb-4 w-[160px] relative block radio-label"
           :class="{
             'border-jade-300 ring-2 ring-jade-100 focus:border-jade-400 focus:border focus:outline-none': checked,
-            'border-gray-100 bg-gray-50 before:hocus:cursor-not-allowed': browser.disabled || !browser.isVersionSupported,
+            'border-gray-100 bg-gray-50 before:hocus:cursor-not-allowed': browser.disabled,
             'border-gray-100 filter grayscale': browserStatus.chosen && !checked,
-            'border-gray-100 before:hocus:cursor-pointer hover:border-indigo-300 hover:ring-2 hover:ring-indigo-100': !browser.disabled && browser.isVersionSupported && !checked && !browserStatus.chosen
+            'border-gray-100 before:hocus:cursor-pointer hover:border-indigo-300 hover:ring-2 hover:ring-indigo-100': !browser.disabled && !checked && !browserStatus.chosen
           }"
         >
           <Tooltip
@@ -35,29 +35,18 @@
               class="mt-[8px] mr-[8px] top-0 right-0 inline-block absolute icon-dark-gray-700 icon-light-gray-200"
               alt="unsupported browser"
             />
-            <template #popper>
-              <div class="text-center p-2 text-gray-300 text-[14px] leading-[20px]">
-                <div
-                  v-if="!browser.isVersionSupported"
-                  class="font-medium text-white mb-2"
-                >
-                  Unsupported browser
-                </div>
-                {{ browser.warning }}
-              </div>
-            </template>
           </Tooltip>
           <div class="text-center">
             <img
               :src="allBrowsersIcons[browser.displayName] || allBrowsersIcons.generic"
               alt=""
               class="h-[40px] w-[40px] inline"
-              :class="{ 'filter grayscale': browser.disabled || !browser.isVersionSupported }"
+              :class="{ 'filter grayscale': browser.disabled }"
             >
           </div>
           <div
             class="font-medium pt-2 px-2 text-[18px] leading-[28px] truncate"
-            :class="checked ? 'text-jade-600' : ( browser.disabled || !browser.isVersionSupported ) ? 'text-gray-500' : 'text-indigo-600'"
+            :class="checked ? 'text-jade-600' : ( browser.disabled ) ? 'text-gray-500' : 'text-indigo-600'"
           >
             {{ browser.displayName }}
           </div>
@@ -188,7 +177,6 @@ fragment OpenBrowserList on CurrentProject {
   browsers {
     id
     disabled
-    isVersionSupported
     name
     displayName
     warning
