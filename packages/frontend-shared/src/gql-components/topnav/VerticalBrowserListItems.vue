@@ -39,9 +39,6 @@
             "
           >
             {{ t('topNav.version') }} {{ browser.majorVersion }}
-            <span v-if="browser.version === 'unsupported'">
-              ({{ t('topNav.versionUnsupported') }})
-            </span>
           </div>
         </div>
       </div>

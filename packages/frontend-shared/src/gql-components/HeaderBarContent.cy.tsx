@@ -34,30 +34,9 @@ describe('<HeaderBarContent />', { viewportWidth: 1000, viewportHeight: 750 }, (
     cy.contains('Edge Canary')
     .should('be.visible')
     .closest('[data-cy="top-nav-browser-list-item"]')
-    .within(() => {
-      cy.findByTestId('unsupported-browser-tooltip-trigger')
-      .should('not.exist')
-    })
 
     cy.get('[data-cy="top-nav-browser-list-item"]').parent()
     .should('have.class', 'overflow-auto')
-
-    cy.contains('(Unsupported)')
-    .scrollIntoView()
-    .should('be.visible')
-    .closest('[data-cy="top-nav-browser-list-item"]')
-    .within(() => {
-      cy.findByTestId('unsupported-browser-tooltip-trigger')
-      .should('exist')
-      .trigger('mouseenter')
-    })
-
-    cy.contains('Unsupported browser').should('be.visible')
-
-    /*
-      TODO: fix flaky test https://github.com/cypress-io/cypress/issues/23436
-      cy.percySnapshot('unsupported browser tooltip')
-    */
   })
 
   describe('breadcrumbs', () => {
