@@ -3177,10 +3177,6 @@ declare namespace Cypress {
      * The user agent the browser sends in all request headers.
      */
     userAgent: null | string
-    /**
-     * Polyfills `window.fetch` to enable Network spying and stubbing
-     */
-    experimentalFetchPolyfill: boolean
 
     /**
      * Override default config options for Component Testing runner.
