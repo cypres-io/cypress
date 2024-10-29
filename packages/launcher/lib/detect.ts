@@ -9,6 +9,7 @@ import * as linuxHelper from './linux'
 import Debug from 'debug'
 import type {
   Browser,
+  BrowserValidator,
   DetectedBrowser,
   FoundBrowser,
 } from '@packages/types'
@@ -28,6 +29,22 @@ type HasVersion = Omit<Partial<FoundBrowser>, 'version' | 'name'> & {
 
 export const getMajorVersion = (version: string): string => {
   return version.split('.')[0]
+}
+
+// Determines if found browser is supported by Cypress. If found to be
+// unsupported, the browser will be unavailable for selection and
+// will present the determined warning message to the user.
+const validateCypressSupport = (validator: BrowserValidator | undefined, browser: FoundBrowser, platform: NodeJS.Platform) => {
+  // If no validator parameter is provided, we fall back to validating against
+  // the browser's minimum supported version
+  const { isSupported, warningMessage } = (validator)(browser, platform)
+
+  if (isSupported) {
+    return
+  }
+
+  browser.unsupportedVersion = true
+  browser.warning = warningMessage
 }
 
 type PlatformHelper = {
@@ -99,6 +116,7 @@ function checkOneBrowser (browser: Browser): Promise<boolean | HasVersion> {
     'custom',
     'warning',
     'info',
+    'unsupportedVersion',
   ] as const
 
   const failed = (err: NotInstalledError) => {
@@ -116,6 +134,8 @@ function checkOneBrowser (browser: Browser): Promise<boolean | HasVersion> {
   .then((val) => _.pick(val, pickBrowserProps) as FoundBrowser)
   .then((foundBrowser) => {
     foundBrowser.majorVersion = getMajorVersion(foundBrowser.version)
+
+    validateCypressSupport(browser.validator, foundBrowser, platform)
 
     return foundBrowser
   })
@@ -180,6 +200,8 @@ export const detectByPath = (
       version,
       majorVersion: getMajorVersion(version),
     }) as FoundBrowser
+
+    validateCypressSupport(browser.validator, parsedBrowser, os.platform())
 
     return parsedBrowser
   }

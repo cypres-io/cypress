@@ -117,6 +117,10 @@ declare namespace Cypress {
      * Warning text to accompany this browser. Shown in desktop-gui.
      */
     warning?: string
+    /**
+     * If `true`, this browser version is not supported in Cypress.
+     */
+    unsupportedVersion?: boolean
   }
 
   /**

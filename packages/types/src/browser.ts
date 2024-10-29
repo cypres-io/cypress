@@ -6,6 +6,15 @@ export type BrowserChannel = 'stable' | 'canary' | 'beta' | 'dev' | 'nightly' | 
 
 export type BrowserFamily = typeof BROWSER_FAMILY[number]
 
+export type BrowserValidatorResult = {
+  // whether or not the browser is supported by Cypress
+  isSupported: boolean
+  // optional warning message that will be shown in the GUI
+  warningMessage?: string
+}
+
+export type BrowserValidator = (browser: FoundBrowser, platform: NodeJS.Platform) => BrowserValidatorResult
+
 /**
  * Represents a typical browser to try to detect and turn into a `FoundBrowser`.
  */
@@ -34,6 +43,8 @@ export type Browser = {
   binary: string | string[]
   /** optional warning that will be shown in the GUI */
   warning?: string
+  /** if set, is called to determine if found browser is supported by Cypress */
+  validator?: BrowserValidator
 }
 
 /**
@@ -45,6 +56,7 @@ export type FoundBrowser = Omit<Browser, 'versionRegex' | 'binary' | 'validator'
   majorVersion?: string | null
   /** is this a user-supplied browser? */
   custom?: boolean
+  unsupportedVersion?: boolean
   disabled?: boolean
 }
 

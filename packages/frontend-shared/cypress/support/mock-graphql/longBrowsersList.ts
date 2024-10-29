@@ -10,6 +10,7 @@ export const longBrowsersList = [
     majorVersion: '73',
     info: 'Info about electron browser',
     isFocusSupported: true,
+    isVersionSupported: true,
     disabled: false,
   },
   {
@@ -22,6 +23,7 @@ export const longBrowsersList = [
     path: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     majorVersion: '78',
     isFocusSupported: true,
+    isVersionSupported: true,
     disabled: false,
   },
   {
@@ -34,6 +36,7 @@ export const longBrowsersList = [
     path: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     majorVersion: '88',
     isFocusSupported: true,
+    isVersionSupported: true,
     disabled: false,
   },
   {
@@ -46,6 +49,7 @@ export const longBrowsersList = [
     path: '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary',
     majorVersion: '80',
     isFocusSupported: true,
+    isVersionSupported: true,
     disabled: false,
   },
   {
@@ -58,6 +62,7 @@ export const longBrowsersList = [
     path: '/Applications/Chromium.app/Contents/MacOS/Chromium',
     majorVersion: '74',
     isFocusSupported: true,
+    isVersionSupported: true,
     disabled: false,
   },
   {
@@ -70,6 +75,7 @@ export const longBrowsersList = [
     path: '/Applications/Chromium.app/Contents/MacOS/Chromium',
     majorVersion: '85',
     isFocusSupported: true,
+    isVersionSupported: true,
     disabled: false,
   },
   {
@@ -82,6 +88,7 @@ export const longBrowsersList = [
     path: '/Applications/Microsoft Edge Beta.app/Contents/MacOS/Microsoft Edge Beta',
     majorVersion: '85',
     isFocusSupported: true,
+    isVersionSupported: false,
     disabled: false,
   },
   {
@@ -94,6 +101,7 @@ export const longBrowsersList = [
     path: '/Applications/Microsoft Edge Canary.app/Contents/MacOS/Microsoft Edge Canary',
     majorVersion: '79',
     isFocusSupported: true,
+    isVersionSupported: true,
     disabled: false,
   },
   {
@@ -106,6 +114,7 @@ export const longBrowsersList = [
     path: '/Applications/Microsoft Edge Dev.app/Contents/MacOS/Microsoft Edge Dev',
     majorVersion: '79',
     isFocusSupported: true,
+    isVersionSupported: true,
     disabled: false,
   },
   {
@@ -118,6 +127,7 @@ export const longBrowsersList = [
     path: '/Applications/Firefox/Contents/MacOS/Firefox',
     majorVersion: '69',
     isFocusSupported: true,
+    isVersionSupported: true,
     disabled: true,
   },
   {
@@ -130,6 +140,7 @@ export const longBrowsersList = [
     path: '/Applications/Firefox/Contents/MacOS/Firefox',
     majorVersion: '75',
     isFocusSupported: true,
+    isVersionSupported: true,
     disabled: true,
   },
   {
@@ -142,7 +153,9 @@ export const longBrowsersList = [
     path: '/Applications/Firefox Developer/Contents/MacOS/Firefox Developer',
     majorVersion: '69',
     isFocusSupported: true,
+    isVersionSupported: false,
     disabled: true,
+    warning: 'Cypress does not support running Firefox Developer Edition version 69. To use Firefox Developer Edition with Cypress, install a version of Firefox Developer Edition newer than or equal to 78.',
   },
   {
     id: '13',
@@ -154,6 +167,7 @@ export const longBrowsersList = [
     path: '/Applications/Firefox Nightly/Contents/MacOS/Firefox Nightly',
     majorVersion: '69',
     isFocusSupported: false,
+    isVersionSupported: true,
     disabled: true,
   },
   {
@@ -166,6 +180,7 @@ export const longBrowsersList = [
     path: '/Applications/Fake Browser/Contents/MacOS/Fake Browser',
     majorVersion: '79',
     isFocusSupported: false,
+    isVersionSupported: true,
     disabled: true,
   },
 ] as const

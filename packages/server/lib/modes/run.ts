@@ -1104,6 +1104,10 @@ async function ready (options: ReadyOptions) {
     errors.throwErr('NO_SPECS_FOUND', projectRoot, String(specPattern))
   }
 
+  if (browser.unsupportedVersion && browser.warning) {
+    errors.throwErr('UNSUPPORTED_BROWSER_VERSION', browser.warning)
+  }
+
   if (browser.family === 'chromium') {
     chromePolicyCheck.run(onWarning)
   }

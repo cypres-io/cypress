@@ -7,9 +7,19 @@ import { utils } from '../../lib/utils'
 import sinon, { SinonStub } from 'sinon'
 import os from 'os'
 import { log } from '../log'
+import * as linuxHelper from '../../lib/linux'
+import * as darwinHelper from '../../lib/darwin'
+import * as windowsHelper from '../../lib/windows'
+import type { Browser } from '@packages/types'
 
 const isWindows = () => {
   return os.platform() === 'win32'
+}
+
+const stubHelpers = (detect) => {
+  sinon.stub(linuxHelper, 'detect').callsFake(detect)
+  sinon.stub(darwinHelper, 'detect').callsFake(detect)
+  sinon.stub(windowsHelper, 'detect').callsFake(detect)
 }
 
 describe('detect', () => {
@@ -43,6 +53,42 @@ describe('detect', () => {
       expect(getMajorVersion('123.45.67')).to.eq('123')
       expect(getMajorVersion('Browser 77.1.0')).to.eq('Browser 77')
       expect(getMajorVersion('999')).to.eq('999')
+    })
+  })
+
+  describe('#detect', () => {
+    const testBrowser = {
+      name: 'test-browser',
+      family: 'chromium',
+      channel: 'test-channel',
+      displayName: 'Test Browser',
+      versionRegex: /Test Browser (\S+)/m,
+      binary: 'test-browser-beta',
+    }
+
+    it('validates browser with own validator property', async () => {
+      stubHelpers((browser) => {
+        return Promise.resolve({
+          name: browser.name,
+          path: '/path/to/test-browser',
+          version: '130',
+        })
+      })
+
+      const mockValidator = sinon.stub().returns({ isSupported: true })
+
+      const foundBrowsers = await detect([{ ...testBrowser as Browser, validator: mockValidator }])
+
+      expect(foundBrowsers).to.have.length(1)
+
+      const foundTestBrowser = foundBrowsers[0]
+
+      expect(foundTestBrowser.name).to.eq('test-browser')
+      expect(foundTestBrowser.displayName).to.eq('Test Browser')
+      expect(foundTestBrowser.majorVersion, 'majorVersion').to.eq('1')
+      expect(foundTestBrowser.unsupportedVersion, 'unsupportedVersion').to.be.undefined
+      expect(foundTestBrowser.warning, 'warning').to.be.undefined
+      expect(mockValidator).to.have.been.called
     })
   })
 
