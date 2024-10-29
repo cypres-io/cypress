@@ -51,7 +51,7 @@ describe('browsers', () => {
         const foundBrowser = {
           ...firefoxBrowser,
           version: '101.1.0',
-          majorVersion: '101',
+          majorVersion: '140',
           validator: (browser, platform) => {
             if (platform === 'win32' && browser.majorVersion && ['101', '102'].includes(browser.majorVersion)) {
               return {

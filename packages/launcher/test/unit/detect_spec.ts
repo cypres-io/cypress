@@ -85,7 +85,7 @@ describe('detect', () => {
 
       expect(foundTestBrowser.name).to.eq('test-browser')
       expect(foundTestBrowser.displayName).to.eq('Test Browser')
-      expect(foundTestBrowser.majorVersion, 'majorVersion').to.eq('1')
+      expect(foundTestBrowser.majorVersion, 'majorVersion').to.eq('130')
       expect(foundTestBrowser.unsupportedVersion, 'unsupportedVersion').to.be.undefined
       expect(foundTestBrowser.warning, 'warning').to.be.undefined
       expect(mockValidator).to.have.been.called
