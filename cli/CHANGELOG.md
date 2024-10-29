@@ -22,6 +22,7 @@ _Released 12/3/2024 (PENDING)_
 
 - Upgraded `electron` from `27.3.10` to `32.2.0`. Addresses [#29547](https://github.com/cypress-io/cypress/issues/29547).
 - Upgraded bundled Chromium version from `118.0.5993.159` to `128.0.6613.178`. Addresses [#29547](https://github.com/cypress-io/cypress/issues/29547).
+- `@cypress/webpack-dev-server` no longer supports `webpack-dev-server` version 3.
 
 ## 13.15.1
 
