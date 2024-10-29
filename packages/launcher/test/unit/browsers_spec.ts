@@ -41,7 +41,7 @@ describe('browsers', () => {
           },
         }
 
-        const result = firefoxBrowser.validator(foundBrowser, 'win32')
+        const result = foundBrowser.validator(foundBrowser, 'win32')
 
         expect(result.isSupported).to.be.false
         expect(result.warningMessage).to.contain('Cypress does not support running Firefox version 101 on Windows due to a blocking bug in Firefox.')
@@ -66,7 +66,7 @@ describe('browsers', () => {
           },
         }
 
-        const result = firefoxBrowser.validator(foundBrowser, 'win32')
+        const result = foundBrowser.validator(foundBrowser, 'win32')
 
         expect(result.isSupported).to.be.true
         expect(result.warningMessage).to.be.undefined
